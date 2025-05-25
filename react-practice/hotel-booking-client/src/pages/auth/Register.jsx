@@ -1,15 +1,43 @@
 import {useNavigate} from 'react-router-dom';
 import Input from '../../components/input/Input'
 import { SiSimplelogin } from "react-icons/si";
+import {useState} from 'react'
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
 
 const Register = () => {
   const navigate = useNavigate();
+
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Perform registration logic here
+    // console.log('Registration data:', { username, email, password });
+    
+    try {
+      const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
+        username,
+        email,
+        password,
+      });
+      console.log("register success",res)
+      toast.success('Hi ' + username + ', Registration successful! Please login.');
+
+      navigate('auth/login');
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
+  };
+
   return (
       <div className='flex flex-col items-center justify-center min-h-screen w-full bg-base-200 lg:px-10 px-4'>
     <div className='shadow-lg bg-base-100 rounded-lg p-6 w-full max-w-md'>
       <h1 className='text-2xl lg:text-3xl font-bold text-center mb-6'>Register</h1>
-         <form action="" className='w-[100%] flex flex-col justify-center items-center' >
+         <form onSubmit={handleSubmit} className='w-[100%] flex flex-col justify-center items-center' >
       {/* user input  */}
     <Input
       svg={
@@ -28,10 +56,11 @@ const Register = () => {
       }
       type={"text"}
       placeholder={"Username"}
-      title={"Only letters, numbers or dash"}
-      pattern={"[A-Za-z][A-Za-z0-9-]*"}
-      minlength={3}
-      maxlength={30}
+      title={"Only letters, numbers or dash"}   
+      minLength={4}
+      maxLength={30}
+      value={username}
+      onChange={(e) => setUsername(e.target.value)}
       validator={"Must be 3 to 30 characters containing only letters, numbers or dash"}
     />
      {/* emil input  */}
@@ -54,6 +83,8 @@ const Register = () => {
       placeholder={"mail@site.com"}
       validator={"Must be a valid email address"}
       title={"Must be a valid email address"}
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
     />
 
 
@@ -78,11 +109,12 @@ const Register = () => {
       type={"password"}
       placeholder={"Password"}
       title={"Must be more than 8 characters, including number, lowercase letter, uppercase letter"}
-      pattern={"(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}"}
-      minlength={3}
-      maxlength={30}
-      validator={` Must be more than 8 characters, including
-  <br />At least one number <br />At least one lowercase letter <br />At least one uppercase letter`}
+      minLength={8}
+      maxLength={30}
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      validator={` Must be more than 8 characters,including
+  At least one number At least one lowercase letter At least one uppercase letter`}
     />
     <div className='w-full px-10'>
    <button className="btn bg-red-500 hover:bg-red-600 w-full" type='submit'>
