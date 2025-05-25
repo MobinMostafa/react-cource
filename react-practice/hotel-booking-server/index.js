@@ -2,8 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import fs from 'fs';
 import dotenv from 'dotenv';
-dotenv.config();
+import mongoose from 'mongoose';
 
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -19,7 +20,21 @@ fs.readdirSync('./routes').forEach(async (r) => {
   app.use('/api', route.default); // Ensure `default` export
 });
 
+// Database connection
 
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.DB_URI);
+    console.log('Database connected successfully');
+  } catch (error) {
+    console.error('Database connection failed:', error);
+    process.exit(1); // Exit the process with failure
+  }
+}
+connectDB();
+
+
+//test route
 
 app.get('/api/', (req, res) => {
   res.send(`Welcome to the Hotel Booking Server,`);
