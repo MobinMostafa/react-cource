@@ -1,4 +1,6 @@
 import Auth from "../models/auth.js";
+import jwt from "jsonwebtoken";
+
 
 export const registerController = async (req, res) => { 
    // console.log(req.body);
@@ -33,6 +35,33 @@ export const registerController = async (req, res) => {
      return res.status(400).send("Error. Try again");
    }
 }
-export const loginController = (req, res) => {
-   console.log(req.body);
+export const loginController = async (req, res) => {
+   const { email, password } = req.body;
+   // console.log(req.body);
+   try{
+
+      let user = await Auth.findOne({email}).exec();
+      if(!user){
+         return res.status(400).send("User not found. Please register first.");
+      }
+    
+      user.comparePassword(password, (err, match) => {
+         if(!match || err){
+            return res.status(400).send("Login failed. Please try again.");
+         }
+         // create JWT token
+         const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+         });
+
+         res.json({ token, user });
+
+      });
+    ;
+     
+
+   }catch(error){
+      console.log("Login failed", error);
+      return res.status(400).send("Login failed. Please try again.");
+   }
 }

@@ -4,10 +4,14 @@ import Input from '../../components/input/Input'
 import { SiSimplelogin } from "react-icons/si";
 import { login } from '../../actions/auth.js';
 import { toast } from 'react-toastify';
+import {useDispatch } from 'react-redux';
+import { setUser } from '../../features/users/usersSlice';
 
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+ 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const handleSubmit = async (e) => {
@@ -16,11 +20,13 @@ const Login = () => {
     // console.log('Login data:', { email, password });
     try {
       const res = await login({ email, password });
-      if(res.data) {
-         console.log('Login response:', res.data);
+      if(res.data){
+        
+          dispatch(setUser(res.data)); // Dispatch the user data to the Redux store
       }
-      toast.success('Login successful! Welcome back.'); 
-      navigate('/home');
+      // console.log('Login response:', res.data.user);
+      toast.success('Login successful! Welcome back.' + res.data.user.username); 
+      navigate('/');
     } catch (error) {
       toast.error(error.response.data || 'Login failed. Please try again.'); 
       // console.error('Login error:', error);
