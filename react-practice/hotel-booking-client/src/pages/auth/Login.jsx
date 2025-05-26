@@ -1,16 +1,36 @@
-
+import {useState} from 'react';
 import {  useNavigate } from 'react-router-dom';
 import Input from '../../components/input/Input'
 import { SiSimplelogin } from "react-icons/si";
+import { login } from '../../actions/auth.js';
+import { toast } from 'react-toastify';
 
 
 const Login = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    // Perform login logic here
+    // console.log('Login data:', { email, password });
+    try {
+      const res = await login({ email, password });
+      if(res.data) {
+         console.log('Login response:', res.data);
+      }
+      toast.success('Login successful! Welcome back.'); 
+      navigate('/home');
+    } catch (error) {
+      toast.error(error.response.data || 'Login failed. Please try again.'); 
+      // console.error('Login error:', error);
+    }
+  };
   return (
     <div className='flex flex-col items-center justify-center min-h-screen w-full bg-base-200 lg:px-10 px-4'>
     <div className='shadow-lg bg-base-100 rounded-lg p-6 w-full max-w-md'>
       <h1 className='text-2xl lg:text-3xl font-bold text-center mb-6'>Login</h1>
-         <form action="" className='w-[100%] flex flex-col justify-center items-center' >
+         <form onSubmit={handleSubmit} className='w-[100%] flex flex-col justify-center items-center' >
    
      {/* emil input  */}
     <Input
@@ -32,6 +52,8 @@ const Login = () => {
       placeholder={"mail@site.com"}
       validator={"Must be a valid email address"}
       title={"Must be a valid email address"}
+      value={email}
+      onChange={(e) => setEmail(e.target.value)}
     />
 
 
@@ -56,11 +78,12 @@ const Login = () => {
       type={"password"}
       placeholder={"Password"}
       title={"Must be more than 8 characters, including number, lowercase letter, uppercase letter"}
-      pattern={"(?=.*d)(?=.*[a-z])(?=.*[A-Z]).{8,}"}
-      minlength={3}
-      maxlength={30}
+      minLength={6}
+      maxLength={30}
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
       validator={` Must be more than 8 characters, including
-  <br />At least one number <br />At least one lowercase letter <br />At least one uppercase letter`}
+At least one number At least one lowercase letter At least one uppercase letter`}
     />
     <div className='w-full px-10'>
    <button className="btn bg-red-500 hover:bg-red-600 w-full" type='submit'>

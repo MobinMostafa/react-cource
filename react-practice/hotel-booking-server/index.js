@@ -34,6 +34,8 @@ const connectDB = async () => {
 connectDB();
 
 
+
+
 //test route
 
 app.get('/api/', (req, res) => {

@@ -24,7 +24,8 @@ export const registerController = async (req, res) => {
       await user.save();
       // console.log("User created successfully", user);
       return res.json({
-         ok: true
+         ok: true,
+         message: "Registration successful! Please login to continue.",
       });
 
    }catch(err){

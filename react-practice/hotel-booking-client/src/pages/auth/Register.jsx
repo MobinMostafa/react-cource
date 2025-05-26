@@ -1,8 +1,9 @@
+import { register } from '../../actions/auth.js';
 import {useNavigate} from 'react-router-dom';
 import Input from '../../components/input/Input'
 import { SiSimplelogin } from "react-icons/si";
 import {useState} from 'react'
-import axios from 'axios';
+
 import { toast } from 'react-toastify';
 
 
@@ -19,17 +20,13 @@ const Register = () => {
     // console.log('Registration data:', { username, email, password });
     
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, {
-        username,
-        email,
-        password,
-      });
-      // console.log("register success",res)
-      toast.success('Hi ' + username + ', Registration successful! Please login.');
+      await register({ username, email, password });
+  
+      toast.success('Hi ' + username + " " + "Registration successful! Please login to continue."); 
 
       navigate('/auth/login');
     } catch (error) {
-      toast.error(error.response.data);
+      toast.error(error.response.data || 'Registration failed. Please try again.');
       // console.error('Registration error:', error);
     }
   };
