@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
-
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
@@ -12,8 +11,8 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    min: 6,
-    max: 64,
+    minLength: 6,
+    maxLength: 64,
   },
   email: {
     type: String,
@@ -26,25 +25,26 @@ const userSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
-  stripeAccountId: '',
- stripeSeller: {},
- stripeSession: {},
+  stripeAccountId: { type: String, default: null },
+  stripeSeller: { type: Object, default: {} },
+  stripeSession: { type: Object, default: {} },
 }, { timestamps: true });
 
-userSchema.pre("save", function (next){
+userSchema.pre("save", function (next) {
   let user = this;
-  if(user.isModified("password")){
-    return bcrypt.hash(user.password, 12, function(err, hash){
-      if(err){
+  if (user.isModified("password")) {
+    bcrypt.hash(user.password, 12, (err, hash) => {
+      if (err) {
         console.log("bcrypt hash error", err);
-        return next(err);
+        next(err);
+      } else {
+        user.password = hash;
+        next();
       }
-      user.password = hash;
-      return next();
     });
+  } else {
+    next();
   }
-  return next();
-
-})
+});
 
 export default mongoose.model("Auth", userSchema);

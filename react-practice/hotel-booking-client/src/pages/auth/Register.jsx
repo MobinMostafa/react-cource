@@ -24,12 +24,13 @@ const Register = () => {
         email,
         password,
       });
-      console.log("register success",res)
+      // console.log("register success",res)
       toast.success('Hi ' + username + ', Registration successful! Please login.');
 
       navigate('/auth/login');
     } catch (error) {
-      console.error('Registration error:', error);
+      toast.error(error.response.data);
+      // console.error('Registration error:', error);
     }
   };
 
