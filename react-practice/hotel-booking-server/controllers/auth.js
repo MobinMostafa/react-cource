@@ -1,6 +1,7 @@
 export const registerController = (req, res) => { 
-    res.send('Register route');
+   console.log(req.body);
+   res.send("User registered successfully");
 }
 export const loginController = (req, res) => {
-    res.send('Login route');
+   console.log(req.body);
 }

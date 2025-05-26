@@ -27,7 +27,7 @@ const Register = () => {
       console.log("register success",res)
       toast.success('Hi ' + username + ', Registration successful! Please login.');
 
-      navigate('auth/login');
+      navigate('/auth/login');
     } catch (error) {
       console.error('Registration error:', error);
     }
