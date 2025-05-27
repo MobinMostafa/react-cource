@@ -8,6 +8,7 @@ import { FaUser } from "react-icons/fa";
 import { useDispatch,useSelector } from "react-redux";
 import { logout } from "../../features/users/usersSlice";
 import Swal from "sweetalert2";
+import { MdDashboardCustomize } from "react-icons/md";
 
 
 const navLinks = [
@@ -21,6 +22,11 @@ const Header = () => {
     const auth = useSelector((state) => state.users.user); // Corrected state reference
     const dispatch = useDispatch();
     const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+
+    // nav close 
+    const handleDropdownClose = () => {
+  document.activeElement.blur(); // Removes focus from dropdown
+};
 
     useEffect(() => {
       document.documentElement.setAttribute('data-theme', theme);
@@ -96,16 +102,27 @@ const Header = () => {
   </NavLink>
  </>) : ( <> 
     <div className="dropdown dropdown-end">
-        <div tabIndex={0} role="button" className="btn btn-ghost rounded-field font-extrabold cursor-pointer">{auth.user.username}</div>
+        <div tabIndex={0} role="button" className="font-extrabold cursor-pointer">
+           <div className="avatar avatar-online avatar-placeholder">
+              <div className="bg-neutral text-neutral-content w-12 rounded-full">
+              <span className="text-xl">{auth.user.username[0].toUpperCase()}</span>
+            </div>
+        </div>
+        </div>
         <ul
           tabIndex={0}
           className="menu dropdown-content bg-base-300 rounded-box z-1 mt-4 w-52 p-2 shadow-sm">
-          <li>
+          <li onClick={handleDropdownClose}>
             <NavLink to="auth/profile" className="text-base-content hover:bg-base-200 flex items-center gap-1.5 font-bold">
               <FaUser className='text-[20px]' /> Profile
             </NavLink>
           </li>
-          <li>
+          <li onClick={handleDropdownClose}>
+            <NavLink to="auth/dashboard" className="text-base-content hover:bg-base-200 flex items-center gap-1.5 font-bold">
+              <MdDashboardCustomize className='text-[20px]' /> Dashboard
+            </NavLink>
+          </li>
+          <li onClick={handleDropdownClose}>
           <button onClick={handleLogout} className="font-bold text-red-500 hover:bg-base-200 flex items-center justify-center gap-1.5">
             <FiLogIn className='text-[20px] ' /> <span className="">Logout</span>
           </button>

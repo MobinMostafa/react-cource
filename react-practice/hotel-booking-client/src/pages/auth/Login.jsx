@@ -26,7 +26,7 @@ const Login = () => {
       }
       // console.log('Login response:', res.data.user);
       toast.success('Login successful! Welcome back.' + res.data.user.username); 
-      navigate('/');
+      navigate('/auth/dashboard');
     } catch (error) {
       toast.error(error.response.data || 'Login failed. Please try again.'); 
       // console.error('Login error:', error);

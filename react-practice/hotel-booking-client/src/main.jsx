@@ -14,6 +14,7 @@ import { Provider } from 'react-redux';
 import Profile from './pages/auth/Profile.jsx';
 
 import PrivateRoute from './features/private/PrivateRoute.jsx';
+import Dashboard from './pages/auth/Dashboard.jsx';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,13 @@ const router = createBrowserRouter([
             element: <PrivateRoute>
               <Profile />
             </PrivateRoute>,
-          }
+          },
+          {
+            path: "dashboard",
+            element: <PrivateRoute>
+              <Dashboard />
+            </PrivateRoute>
+          },
         ]
       },
       {
