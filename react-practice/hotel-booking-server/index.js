@@ -3,6 +3,8 @@ import cors from 'cors';
 import fs from 'fs';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import {requireSignIn} from './middleware/index.js'; // Import your authentication middleware
+
 
 dotenv.config();
 
@@ -12,6 +14,7 @@ const PORT = process.env.PORT || 5000;
 // Middleware
 app.use(express.json());
 app.use(cors());
+app.use(requireSignIn);
 
 // Routes autoload
 // Read all files in the routes directory and import them
