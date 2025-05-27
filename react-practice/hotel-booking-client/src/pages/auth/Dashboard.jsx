@@ -1,17 +1,29 @@
-
+import { useState } from "react";
 import { TbBuildingBurjAlArab } from "react-icons/tb";
+import YourHotel from "../../components/hotel/YourHotel";
+import {useSelector} from "react-redux";
+import { GrStripe } from "react-icons/gr";
+import { createConnectAccount } from "../../actions/stripe.js";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
-  // Form state
-//   const [guestName, setGuestName] = useState("");
-//   const [guestEmail, setGuestEmail] = useState("");
-//   const [guestPhone, setGuestPhone] = useState("");
-//   const [roomType, setRoomType] = useState("");
-//   const [checkIn, setCheckIn] = useState("");
-//   const [checkOut, setCheckOut] = useState("");
-  // const [adults, setAdults] = useState(1);
-  // const [children, setChildren] = useState(0);
+  const auth = useSelector((state) => state.users.user); // Accessing user data from Redux store
+  const [loading, setLoading] = useState(false);
 
+
+
+  // Function to handle Stripe setup click
+
+  const handleClick = async() => {
+      setLoading(true);
+      try {
+         let res = await createConnectAccount(auth);
+         console.log(res);
+      } catch (error) {
+        toast.error('Stripe connect failed. Please try again.');
+        setLoading(false);
+      }
+  }
   return (
     <div className="container mx-auto p-6 ">
       {/* Navbar */}
@@ -32,10 +44,32 @@ const Dashboard = () => {
           {/* name of each tab group should be unique */}
 <div className="tabs tabs-border w-full rounded-lg shadow-lg">
   <input type="radio" name="my_tabs_2" className="tab" aria-label="Your Booking" />
-  <div className="tab-content border-base-300 bg-base-100 p-10">Tab content 1</div>
+  <div className="tab-content border-base-300 bg-base-100 p-10">
+    {/* tab one content here  */}
+  Tab content 1
+  
+  </div>
 
   <input type="radio" name="my_tabs_2" className="tab" aria-label="Your Hotel" defaultChecked />
-  <div className="tab-content border-base-300 bg-base-100 p-10">Tab content 2</div>
+  <div className="tab-content border-base-300 bg-base-100 p-10">
+  {/* your hotel content here */}
+ 
+ {auth && auth.user.stripe_seller ? <YourHotel /> : <>
+  <div>
+    <h2 className="text-2xl font-bold mb-4">Setup payment method with Stripe</h2>
+    <p className="mb-4">To manage your hotel and bookings, please set up your payment method with Stripe.</p>
+    <div className="flex justify-center">
+      <button onClick={handleClick} className="btn bg-red-500 hover:berg-red-600 text-white flex items-center">
+        <GrStripe className="text-2xl mr-2" />
+        Setup Stripe
+      </button>
+    </div>
+  </div>
+ </>
+ 
+ }
+  
+  </div>
 
   <input type="radio" name="my_tabs_2" className="tab" aria-label="Tab 3" />
   <div className="tab-content border-base-300 bg-base-100 p-10">Tab content 3</div>
