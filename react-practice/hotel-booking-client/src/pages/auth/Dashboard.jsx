@@ -46,7 +46,7 @@ const Dashboard = () => {
           <TbBuildingBurjAlArab className="text-3xl text-red-600" />Booking Dashboard
         </h1>
 
-        <div className="mt-4">
+        <div className="mt-4 mb-10">
           <div className="tabs tabs-border w-full rounded-lg shadow-lg">
             <input type="radio" name="my_tabs_2" className="tab" aria-label="Your Booking" />
             <div className="tab-content border-base-300 bg-base-100 p-10">Tab content 1</div>
