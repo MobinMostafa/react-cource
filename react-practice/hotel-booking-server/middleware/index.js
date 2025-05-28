@@ -1,9 +1,4 @@
 
-import dotenv from 'dotenv';
-import { expressjwt } from 'express-jwt';
-dotenv.config();
-
-
 import jwt from "jsonwebtoken";
 
 export const requireSignIn = (req, res, next) => {
@@ -18,3 +13,5 @@ export const requireSignIn = (req, res, next) => {
     res.status(403).json({ error: "Invalid token" });
   }
 };
+
+

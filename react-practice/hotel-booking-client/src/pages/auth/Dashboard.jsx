@@ -10,7 +10,7 @@ const Dashboard = () => {
   const auth = useSelector((state) => state.users.user); // Accessing user data from Redux store
   const [loading, setLoading] = useState(false);
 
-console.log("Auth data:", auth.token); // Debugging line to check auth data
+// console.log("Auth data:", auth.token); // Debugging line to check auth data
 
   // Function to handle Stripe setup click
 
@@ -18,7 +18,8 @@ console.log("Auth data:", auth.token); // Debugging line to check auth data
       setLoading(true);
       try {
          let res = await createConnectAccount(auth.token);
-         console.log(res);
+        //  console.log(res);
+        window.location.href = res.data;
       } catch (error) {
         console.error("Stripe connect error:", error);
         toast.error('Stripe connect failed. Please try again.');
