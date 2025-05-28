@@ -44,21 +44,16 @@ export const createConnectAccount = async (req, res) => {
 };
 
 export const getAccountStatus = async (req, res) => {
-   const user = await Auth.findById(req.user._id).exec();
-   const account = await stripe.accounts.retrieve(user.stripeAccountId);
-//    res.json(account);
-// console.log(account);
-   const updatedUser = await Auth.findByIdAndUpdate(
-      user._id,
-      {
-         stripeSeller: account,
-      },
-      { new: true }
-   )
-   .select("-password")
-   .exec();
- 
-//    console.log(updatedUser);
-   res.json(updatedUser);
- 
-}
+  const user = await Auth.findById(req.user._id).exec();
+  const account = await stripe.accounts.retrieve(user.stripeAccountId);
+
+  const updatedUser = await Auth.findByIdAndUpdate(
+    user._id,
+    { stripeSeller: account },
+    { new: true }
+  ).select("-password").exec();
+
+  console.log("Updated User:", updatedUser); // Debugging log
+  res.json(updatedUser);
+};
+

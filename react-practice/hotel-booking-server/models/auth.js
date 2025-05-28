@@ -4,18 +4,18 @@ import bcrypt from "bcrypt";
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
-    required: "Name is required",
+    required: [true, "Name is required"],
     trim: true,
   },
   password: {
     type: String,
     required: true,
-    minLength: 6,
-    maxLength: 64,
+    minlength: 6,
+    maxlength: 64,
   },
   email: {
     type: String,
-    required: "Email is required",
+    required: [true, "Email is required"],
     trim: true,
     unique: true,
   },
@@ -29,33 +29,27 @@ const userSchema = new mongoose.Schema({
   stripeSession: { type: Object, default: {} },
 }, { timestamps: true });
 
-userSchema.pre("save", function (next) {
-  let user = this;
-  if (user.isModified("password")) {
-    bcrypt.hash(user.password, 12, (err, hash) => {
-      if (err) {
-        console.log("bcrypt hash error", err);
-        next(err);
-      } else {
-        user.password = hash;
-        next();
-      }
-    });
-  } else {
+// Hash password before saving
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
+
+  try {
+    this.password = await bcrypt.hash(this.password, 12);
     next();
+  } catch (err) {
+    console.error("bcrypt hash error:", err);
+    next(err);
   }
 });
 
-
-userSchema.methods.comparePassword = function (password, next) {
-  bcrypt.compare(password, this.password, (err, match) => {
-    if (err) {
-      console.log("bcrypt compare error", err);
-      next(err, false);
-    } else {
-      next(null, match);
-    }
-  });
-}
+// Compare password method
+userSchema.methods.comparePassword = async function (password) {
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (err) {
+    console.error("bcrypt compare error:", err);
+    return false;
+  }
+};
 
 export default mongoose.model("Auth", userSchema);
