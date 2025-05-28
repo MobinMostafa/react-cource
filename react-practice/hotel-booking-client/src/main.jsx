@@ -15,6 +15,7 @@ import Profile from './pages/auth/Profile.jsx';
 
 import PrivateRoute from './features/private/PrivateRoute.jsx';
 import Dashboard from './pages/auth/Dashboard.jsx';
+import CallBack from './stripe/CallBack.jsx';
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,12 @@ const router = createBrowserRouter([
             </PrivateRoute>
           },
         ]
+      },
+      {
+        path: "stripe/callback",
+        element: <PrivateRoute>
+          <CallBack />
+        </PrivateRoute>
       },
       {
         path: "*",
