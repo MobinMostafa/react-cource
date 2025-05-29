@@ -57,4 +57,8 @@ export const currencyFormatter = (data) => {
    })
 }
 
+export const payoutSetting = async (token) => await axios.post(`${import.meta.env.VITE_API_URL}/payout-setting`, {}, {
+  headers: { Authorization: `Bearer ${token}` },
+});
+
 

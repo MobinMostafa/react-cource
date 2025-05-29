@@ -3,7 +3,7 @@ import { TbBuildingBurjAlArab } from "react-icons/tb";
 import YourHotel from "../../components/hotel/YourHotel";
 import { useSelector } from "react-redux";
 import { GrStripe } from "react-icons/gr";
-import { createConnectAccount, getAccountBalance,currencyFormatter } from "../../actions/stripe.js";
+import { createConnectAccount, getAccountBalance,currencyFormatter, payoutSetting } from "../../actions/stripe.js";
 import { toast } from "react-toastify";
 
 const Dashboard = () => {
@@ -32,7 +32,7 @@ const Dashboard = () => {
     setLoading(true);
     try {
       let res = await createConnectAccount(auth.token);
-      console.log(res);
+      // console.log(res);
 
       if (res.data && typeof res.data === "string" && res.data.startsWith("http")) {
         window.location.href = res.data;
@@ -45,6 +45,20 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handlePayout = async () => {
+     setLoading(true);
+     try{
+         const res = await payoutSetting(auth.token);
+         console.log(res);
+        //  window.location.href = res.data.url;
+         toast.success("Payout settings updated successfully.");
+         setLoading(false);
+     }catch(error){
+       console.log(error)
+       toast.error("Payout settings failed. Please try again.");
+     }
   };
 
   return (
@@ -60,7 +74,7 @@ const Dashboard = () => {
            {balance && balance.pending && balance.pending.map((ba) => (
             <span className="text-sm text-base-400 lg:py-4 lg:px-4 lg:text-xl font-bold badge badge-success" key={ba}> {currencyFormatter(ba)}</span>
            ))}
-          <h2 className="text-sm lg:text-xl font-bold ">Payout Settings</h2>
+          <h2 className="text-sm lg:text-xl font-bold " onClick={handlePayout} >Payout Settings</h2>
           </>
           )}
          
