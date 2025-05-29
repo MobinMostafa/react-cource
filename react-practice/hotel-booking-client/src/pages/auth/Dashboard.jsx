@@ -42,9 +42,18 @@ const Dashboard = () => {
     <div className="container mx-auto p-6">
       {/* Navbar */}
       <div className="bg-base-200 rounded-lg shadow-md p-4 lg:px-[40px]">
-        <h1 className="text-xl lg:text-3xl font-bold flex items-center gap-2 mt-[30px]">
+      <div className="flex justify-between items-center gap-2 mt-[30px]">
+          <h2 className="text-xl lg:text-3xl font-bold flex items-center gap-2">
           <TbBuildingBurjAlArab className="text-3xl text-red-600" />Booking Dashboard
-        </h1>
+          </h2>
+          {isStripeSetupComplete && (
+          <> 
+          <h2 className="text-xl lg:text-xl font-bold ">Pending Balance</h2>
+          <h2 className="text-xl lg:text-xl font-bold ">Payout Settings</h2>
+          </>
+          )}
+         
+      </div>
 
         <div className="mt-4 mb-10">
           <div className="tabs tabs-border w-full rounded-lg shadow-lg">
