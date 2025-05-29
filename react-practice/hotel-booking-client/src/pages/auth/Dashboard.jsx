@@ -3,7 +3,7 @@ import { TbBuildingBurjAlArab } from "react-icons/tb";
 import YourHotel from "../../components/hotel/YourHotel";
 import { useSelector } from "react-redux";
 import { GrStripe } from "react-icons/gr";
-import { createConnectAccount, getAccountBalance } from "../../actions/stripe.js";
+import { createConnectAccount, getAccountBalance,currencyFormatter } from "../../actions/stripe.js";
 import { toast } from "react-toastify";
 
 const Dashboard = () => {
@@ -52,13 +52,15 @@ const Dashboard = () => {
       {/* Navbar */}
       <div className="bg-base-200 rounded-lg shadow-md p-4 lg:px-[40px]">
       <div className="flex justify-between items-center gap-2 mt-[30px]">
-          <h2 className="text-xl lg:text-3xl font-bold flex items-center gap-2">
-          <TbBuildingBurjAlArab className="text-3xl text-red-600" />Booking Dashboard
+          <h2 className="text-md lg:text-3xl font-bold flex items-center gap-2">
+          <TbBuildingBurjAlArab className="text-xl lg:text-3xl text-red-600" />Booking Dashboard
           </h2>
           {isStripeSetupComplete && (
           <> 
-          <h2 className="text-xl lg:text-xl font-bold ">Pending Balance</h2>
-          <h2 className="text-xl lg:text-xl font-bold ">Payout Settings</h2>
+           {balance && balance.pending && balance.pending.map((ba) => (
+            <span className="text-sm text-base-400 lg:py-4 lg:px-4 lg:text-xl font-bold badge badge-success" key={ba}> {currencyFormatter(ba)}</span>
+           ))}
+          <h2 className="text-sm lg:text-xl font-bold ">Payout Settings</h2>
           </>
           )}
          
