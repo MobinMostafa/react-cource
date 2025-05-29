@@ -1,9 +1,9 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { TbBuildingBurjAlArab } from "react-icons/tb";
 import YourHotel from "../../components/hotel/YourHotel";
 import { useSelector } from "react-redux";
 import { GrStripe } from "react-icons/gr";
-import { createConnectAccount } from "../../actions/stripe.js";
+import { createConnectAccount, getAccountBalance } from "../../actions/stripe.js";
 import { toast } from "react-toastify";
 
 const Dashboard = () => {
@@ -13,6 +13,15 @@ const Dashboard = () => {
   const user = useMemo(() => auth?.user, [auth]);
   const isStripeSetupComplete =
     user?.stripeAccountId && user?.stripeSeller?.charges_enabled;
+
+  const [balance, setBalance] = useState(0);
+
+  useEffect(() => {
+      getAccountBalance(auth.token).then((res) => {
+        // console.log(res);
+        setBalance(res.data);
+      });
+  }, [])
 
   const handleClick = async () => {
     if (!auth?.token) {

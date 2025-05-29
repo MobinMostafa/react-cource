@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Log API URL for debugging
-console.log("API URL:", import.meta.env.VITE_API_URL);
+// console.log("API URL:", import.meta.env.VITE_API_URL);
 
 export const createConnectAccount = async (token) => {
   try {
@@ -13,7 +13,7 @@ export const createConnectAccount = async (token) => {
     throw error;
   }
 };
-
+// get account status
 export const getAccountStatus = async (token) => {
   try {
     return await axios.post(`${import.meta.env.VITE_API_URL}/get-account-status`, {}, {
@@ -21,6 +21,18 @@ export const getAccountStatus = async (token) => {
     });
   } catch (error) {
     console.error("Error fetching account status:", error);
+    throw error;
+  }
+};
+
+// get account balance
+export const getAccountBalance = async (token) => {
+  try {
+    return await axios.post(`${import.meta.env.VITE_API_URL}/get-account-balance`, {}, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  } catch (error) {
+    console.error("Error fetching account balance:", error);
     throw error;
   }
 };
