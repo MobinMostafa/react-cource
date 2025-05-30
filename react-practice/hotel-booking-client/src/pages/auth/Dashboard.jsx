@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { GrStripe } from "react-icons/gr";
 import { createConnectAccount, getAccountBalance,currencyFormatter, payoutSetting } from "../../actions/stripe.js";
 import { toast } from "react-toastify";
+import { IoSettingsOutline } from "react-icons/io5";
 
 const Dashboard = () => {
   const auth = useSelector((state) => state.users.user);
@@ -51,9 +52,9 @@ const Dashboard = () => {
      setLoading(true);
      try{
          const res = await payoutSetting(auth.token);
-         console.log(res);
-        //  window.location.href = res.data.url;
-         toast.success("Payout settings updated successfully.");
+        //  console.log(res);
+         window.location.href = res.data.url;
+         toast.success("Payout settings open in window wait a moment please.");
          setLoading(false);
      }catch(error){
        console.log(error)
@@ -72,9 +73,21 @@ const Dashboard = () => {
           {isStripeSetupComplete && (
           <> 
            {balance && balance.pending && balance.pending.map((ba) => (
-            <span className="text-sm text-base-400 lg:py-4 lg:px-4 lg:text-xl font-bold badge badge-success" key={ba}> {currencyFormatter(ba)}</span>
+           <div className="tooltip">
+              <div className="tooltip-content">
+                <div className=" text-base-100 text-sm lg:text-md">Pending Balance</div>
+              </div>
+              <span className="text-sm text-base-400 lg:py-4 lg:px-4 lg:text-xl font-bold " key={ba}> {currencyFormatter(ba)}</span>
+            </div>
+           
            ))}
-          <h2 className="text-sm lg:text-xl font-bold " onClick={handlePayout} >Payout Settings</h2>
+           <div className="tooltip">
+              <div className="tooltip-content">
+                <div className=" text-base-100 text-sm lg:text-md">Payout Setting</div>
+              </div>
+              <h2 className="text-sm lg:text-xl font-bold cursor-pointer flex items-center gap-2" onClick={handlePayout} ><IoSettingsOutline /> Payout</h2>
+            </div>
+          
           </>
           )}
          

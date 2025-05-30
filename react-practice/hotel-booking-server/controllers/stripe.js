@@ -68,7 +68,7 @@ export const getAccountStatus = async (req, res) => {
     { new: true }
   ).select("-password").exec();
 
-  console.log("Updated User:", updatedUser); // Debugging log
+//   console.log("Updated User:", updatedUser); // Debugging log
   res.json(updatedUser);
 };
 
@@ -87,4 +87,17 @@ export const getAccountBalance = async (req, res) => {
      console.log(error)
     }
 
+}
+
+export const payoutSetting = async (req,res) => {
+    try{
+      const user = await Auth.findById(req.user._id).exec();
+      const loginLink = await stripe.accounts.createLoginLink(user.stripeAccountId,{
+        redirect_url: process.env.STRIPE_SETTING_URL
+      });
+    //   console.log(loginLink, "loginlink here payout setting");
+      res.json(loginLink);
+    }catch(error){
+       console.log(error, "payout setting error")
+    }
 }

@@ -8,7 +8,7 @@ export const requireSignIn = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded; // Attach user to request
-    console.log("Decoded User:", req.user); // Debugging log
+    // console.log("Decoded User:", req.user); // Debugging log
     next();
   } catch (error) {
     console.error("JWT Verification Error:", error);
