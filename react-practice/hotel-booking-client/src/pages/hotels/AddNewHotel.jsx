@@ -186,16 +186,19 @@ export default function AddNewHotel() {
             name="bed"
             type="number"
             min="1"
-            placeholder="Beds"
+            placeholder="Number of beds"
             value={bed}
             onChange={change}
             className="input w-full"
           />
 
-          <DatePicker placeholder="From date" onChange={(date, dateString) => setValues({...values, from:dateString })} 
+          <div className="mt-4">
+            <DatePicker placeholder="From date" onChange={(date, dateString) => setValues({...values, from:dateString })} 
           className="input w-full"
           disabledDate={(current) => current && current < moment().subtract(1, "days")}
            />
+          </div>
+
          <div className="mt-4">
            <DatePicker placeholder="To date" onChange={(date, dateString) => setValues({...values, to:dateString })} 
            className="input w-full "
@@ -211,13 +214,15 @@ export default function AddNewHotel() {
         {/* ---------- right panel (preview) ---------- */}
         <section className="flex-1 bg-base-300 p-6 rounded shadow">
           <h3 className="text-center text-2xl font-bold mb-4">Preview</h3>
-          <img
+         <div>
+           <img
             src={preview}
             alt="Preview"
             className="w-full h-48 object-cover rounded mb-4"
           />
-          <p className="font-bold text-xl">{title}</p>
-          <p className="mt-2">{content}</p>
+         </div>
+          <p className="mt-2 text-lg">Title: {title}</p>
+          <p className="mt-2 text-lg">Content: {content}</p>
           <p className="mt-2 text-lg">Price: {price}</p>
           <p className="mt-1 text-lg">Beds: {bed}</p>
           <p className="mt-1 text-lg">City: {location}</p>
