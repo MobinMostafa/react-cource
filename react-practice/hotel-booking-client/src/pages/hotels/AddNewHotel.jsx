@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { FiMapPin } from "react-icons/fi";      // location icon (react-icons)
 import { DatePicker } from "antd";
 import moment from "moment";
+import { createHotel } from "../../actions/hotel.js";
+import { useSelector } from "react-redux";
 
 
 /* ---------- free API helper (OpenStreetMap / Nominatim) ---------- */
@@ -39,6 +41,9 @@ const fetchCitiesBD = async (query) => {
 
 /* ----------------------------------------------------------------- */
 export default function AddNewHotel() {
+  const auth = useSelector((state) => state.users.user);
+  // console.log(auth)
+
   const [preview, setPreview] = useState("https://placehold.co/600x400");
   const [values, setValues] = useState({
     title: "",
@@ -94,10 +99,31 @@ export default function AddNewHotel() {
     setPreview(URL.createObjectURL(file));
   };
 
+
  
 
-  const save = () => {
-    console.log("hotel payload:", values);
+  const handleSave = async (e) => {
+
+    e.preventDefault();
+    
+      const hotelData = new FormData();
+        hotelData.append("title", title);
+        hotelData.append("content", content);
+        hotelData.append("location", location);
+        preview && hotelData.append("image", preview);
+        hotelData.append("price", price);
+        hotelData.append("bed", bed);
+        hotelData.append("from", from);
+        hotelData.append("to", to);
+
+        console.log([...hotelData]);
+        
+
+      const res = await createHotel(auth.token,hotelData);
+      console.log("hotel created response", res);
+      setTimeout(() => {
+        window.location.reload();
+      },1000)
   };
 
   /* ---------- JSX ------------------------------------------------- */
@@ -110,7 +136,7 @@ export default function AddNewHotel() {
       <div className="flex flex-col lg:flex-row gap-6 max-w-5xl mx-auto">
         {/* ---------- left panel (inputs) ---------- */}
         <section className="flex-1 bg-base-200 p-6 rounded shadow space-y-4">
-
+         <form onSubmit={handleSave}>
           {/* image */}
           <div>
             <label className="label font-bold">Pick an image</label>
@@ -206,9 +232,10 @@ export default function AddNewHotel() {
             />
          </div>
 
-          <button onClick={save} className="btn btn-neutral w-full mt-4">
+          <button type="submit" className="btn btn-neutral w-full mt-4">
             Save
           </button>
+          </form>
         </section>
 
         {/* ---------- right panel (preview) ---------- */}
