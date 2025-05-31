@@ -17,6 +17,7 @@ import PrivateRoute from './features/private/PrivateRoute.jsx';
 import Dashboard from './pages/auth/Dashboard.jsx';
 import CallBack from './stripe/CallBack.jsx';
 import AddNewHotel from './pages/hotels/AddNewHotel.jsx';
+import HotelDetails from './pages/hotels/HotelDetails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -63,10 +64,19 @@ const router = createBrowserRouter([
         </PrivateRoute>
       },
       {
-        path: "hotels/add-new-hotel",
-        element: <PrivateRoute>
-          <AddNewHotel />
-        </PrivateRoute>
+        path: "hotels",
+        children: [
+          {
+            path: "add-new-hotel",
+            element: <PrivateRoute>
+              <AddNewHotel />
+            </PrivateRoute>
+          },
+          {
+            path: "hotel-details/:id",
+            element: <HotelDetails /> 
+          }
+        ]
       },
       {
         path: "*",
