@@ -37,3 +37,14 @@ export const getHotels = async (req, res) => {
         });
     }
 }
+
+// hotel image 
+
+export const getHotelImage = async (req, res) => {
+    const hotel = await Hotel.findById(req.params.id).exec();
+
+   if (hotel.image.data){
+    res.set('Content-Type', hotel.image.contentType);
+    return res.send(hotel.image.data);
+   }
+}

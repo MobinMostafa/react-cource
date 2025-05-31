@@ -7,10 +7,15 @@ const HotelCard = ({hotel}) => {
     const navigate = useNavigate()
   return (
     <div className="card md:card-side bg-base-100 shadow-sm">
-  <figure>
-    <img
+  <figure className='lg:w-[45%]'>
+    {hotel.image && hotel.image.contentType ? 
+       <img
+      src={`${import.meta.env.VITE_API_URL}/hotel/image/${hotel._id}`}
+      alt="hotel booking" />
+      : <img
       src="https://placehold.co/600x400"
       alt="hotel booking" />
+    }
   </figure>
   <div className="card-body">
     <h2 className="card-title lg:text-3xl">{hotel.title} <span className='text-red-500 font-bold'>{currencyFormatter({amount: hotel.price, currency: "USD"})}</span>  </h2>
