@@ -9,7 +9,7 @@ const hotelSchema = new Schema(
             type: String,
             required: "Title is required",
         },
-        description: {
+        content: {
             type: String,
             required: "Description is required",
             maxlength: 10000,
@@ -29,7 +29,7 @@ const hotelSchema = new Schema(
         },
         image: {
             data: Buffer,
-            contentType: String,
+            contentType: String,   
         },
         bed: {
             type: Number,

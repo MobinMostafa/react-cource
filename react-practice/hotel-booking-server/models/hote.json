@@ -1,0 +1,50 @@
+[
+  {
+    "title": "Grand Palace Hotel",
+    "description": "A luxurious hotel with stunning views and top-notch amenities.",
+    "location": "Dhaka, Bangladesh",
+    "price": 120,
+    "postedBy": "664f1d2bc8a5de0021f8a9b0",
+    "image": {
+      "data": "base64_encoded_image_string",
+      "contentType": "image/jpeg"
+    },
+    "bed": 2,
+    "from": "2025-06-01T12:00:00Z",
+    "to": "2025-06-07T12:00:00Z",
+    "createdAt": "2025-05-30T09:00:00Z",
+    "updatedAt": "2025-05-30T09:30:00Z"
+  },
+  {
+    "title": "Sunset Resort",
+    "description": "A peaceful retreat with a private beach and amazing sunset views.",
+    "location": "Cox's Bazar, Bangladesh",
+    "price": 85,
+    "postedBy": "664f1d2bc8a5de0021f8a9b1",
+    "image": {
+      "data": "base64_encoded_image_string",
+      "contentType": "image/png"
+    },
+    "bed": 1,
+    "from": "2025-06-05T14:00:00Z",
+    "to": "2025-06-10T11:00:00Z",
+    "createdAt": "2025-05-29T08:45:00Z",
+    "updatedAt": "2025-05-30T07:50:00Z"
+  },
+  {
+    "title": "Mountain View Lodge",
+    "description": "A cozy hotel nestled in the hills, perfect for nature lovers.",
+    "location": "Sylhet, Bangladesh",
+    "price": 95,
+    "postedBy": "664f1d2bc8a5de0021f8a9b2",
+    "image": {
+      "data": "base64_encoded_image_string",
+      "contentType": "image/webp"
+    },
+    "bed": 3,
+    "from": "2025-06-12T10:00:00Z",
+    "to": "2025-06-20T10:00:00Z",
+    "createdAt": "2025-05-28T07:30:00Z",
+    "updatedAt": "2025-05-30T06:20:00Z"
+  }
+]

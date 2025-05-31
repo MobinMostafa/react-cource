@@ -1,10 +1,13 @@
 /*  AddNewHotel.jsx  */
 import { useState, useEffect } from "react";
+import {useNavigate} from 'react-router-dom';
 import { FiMapPin } from "react-icons/fi";      // location icon (react-icons)
 import { DatePicker } from "antd";
 import moment from "moment";
 import { createHotel } from "../../actions/hotel.js";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
 
 
 /* ---------- free API helper (OpenStreetMap / Nominatim) ---------- */
@@ -42,6 +45,8 @@ const fetchCitiesBD = async (query) => {
 /* ----------------------------------------------------------------- */
 export default function AddNewHotel() {
   const auth = useSelector((state) => state.users.user);
+
+  const navigate = useNavigate();
   // console.log(auth)
 
   const [preview, setPreview] = useState("https://placehold.co/600x400");
@@ -50,11 +55,13 @@ export default function AddNewHotel() {
     content: "",
     location: "",
     price: "",
+    image: "",
     bed: "",
+    postedBy: auth.user._id,
     from:"",
     To:"",
   });
-  const { title, content, location, price, bed, from, to } = values;
+  const { title, content, location, price,image,postedBy, bed, from, to } = values;
 
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -94,9 +101,9 @@ export default function AddNewHotel() {
   };
 
   const pickImage = (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    setPreview(URL.createObjectURL(file));
+   
+    setPreview(URL.createObjectURL(e.target.files[0]));
+    setValues({ ...values, image: e.target.files[0] });
   };
 
 
@@ -110,20 +117,28 @@ export default function AddNewHotel() {
         hotelData.append("title", title);
         hotelData.append("content", content);
         hotelData.append("location", location);
-        preview && hotelData.append("image", preview);
+        image && hotelData.append("image", image);
+        hotelData.append("postedBy", postedBy);
         hotelData.append("price", price);
         hotelData.append("bed", bed);
         hotelData.append("from", from);
         hotelData.append("to", to);
+       
 
-        console.log([...hotelData]);
+        // console.log([...hotelData]);
         
 
+    try{
       const res = await createHotel(auth.token,hotelData);
       console.log("hotel created response", res);
+      toast.success('Hotel created successfully');
       setTimeout(() => {
         window.location.reload();
+        navigate('/auth/dashboard')
       },1000)
+    }catch(error){
+       toast.error(error, 'Hotel creation failed. Please try again.');
+    }
   };
 
   /* ---------- JSX ------------------------------------------------- */
@@ -143,9 +158,11 @@ export default function AddNewHotel() {
             <input
               type="file"
               accept="image/*"
+              name="image"
               onChange={pickImage}
               className="file-input w-full"
               placeholder="Choase an image"
+              
             />
             <p className="text-xs mt-1">Max size 2 MB</p>
           
@@ -158,6 +175,7 @@ export default function AddNewHotel() {
             value={title}
             onChange={change}
             className="input w-full"
+            required
           />
           </div>
 
@@ -168,6 +186,7 @@ export default function AddNewHotel() {
             value={content}
             onChange={change}
             className="textarea w-full h-24"
+            required
           />
          </div>
 
@@ -213,6 +232,7 @@ export default function AddNewHotel() {
             value={price}
             onChange={change}
             className="input w-full"
+            required
           />
           </div>
 
@@ -225,6 +245,7 @@ export default function AddNewHotel() {
             value={bed}
             onChange={change}
             className="input w-full"
+            required
           />
           </div>
 
