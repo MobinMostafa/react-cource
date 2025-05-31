@@ -24,3 +24,16 @@ export const createHotel = async (req, res) => {
         });
     }
 }
+
+
+export const getHotels = async (req, res) => {
+    try {
+        const hotels = await Hotel.find({}).limit(24).select('-image.data').populate('postedBy', '_id name').exec();
+        res.status(200).json(hotels);
+    } catch (err) {
+        console.log(err, 'Error getting hotels');
+        res.status(400).json({
+            error: err.message
+        });
+    }
+}

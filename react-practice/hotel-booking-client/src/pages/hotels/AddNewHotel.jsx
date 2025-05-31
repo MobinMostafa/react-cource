@@ -57,11 +57,10 @@ export default function AddNewHotel() {
     price: "",
     image: "",
     bed: "",
-    postedBy: auth.user._id,
     from:"",
     To:"",
   });
-  const { title, content, location, price,image,postedBy, bed, from, to } = values;
+  const { title, content, location, price,image,bed, from, to } = values;
 
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -118,7 +117,6 @@ export default function AddNewHotel() {
         hotelData.append("content", content);
         hotelData.append("location", location);
         image && hotelData.append("image", image);
-        hotelData.append("postedBy", postedBy);
         hotelData.append("price", price);
         hotelData.append("bed", bed);
         hotelData.append("from", from);
