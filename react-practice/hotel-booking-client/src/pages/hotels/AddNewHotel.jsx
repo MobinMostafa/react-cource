@@ -139,34 +139,40 @@ export default function AddNewHotel() {
          <form onSubmit={handleSave}>
           {/* image */}
           <div>
-            <label className="label font-bold">Pick an image</label>
+            
             <input
               type="file"
               accept="image/*"
               onChange={pickImage}
               className="file-input w-full"
+              placeholder="Choase an image"
             />
             <p className="text-xs mt-1">Max size 2 MB</p>
+          
           </div>
-
-          <input
+          
+          <div className="mt-4">
+            <input
             name="title"
             placeholder="Hotel title"
             value={title}
             onChange={change}
             className="input w-full"
           />
+          </div>
 
-          <textarea
+         <div className="mt-4">
+           <textarea
             name="content"
             placeholder="Description"
             value={content}
             onChange={change}
             className="textarea w-full h-24"
           />
+         </div>
 
           {/* location with icon + dropdown */}
-          <div className="relative">
+          <div className="relative mt-4">
             <div className="flex items-center">
               <FiMapPin className="absolute left-3 z-100 text-gray-500 pointer-events-none" />
               <input
@@ -198,7 +204,8 @@ export default function AddNewHotel() {
             )}
           </div>
 
-          <input
+          <div className="mt-4">
+            <input
             name="price"
             type="number"
             step="0.01"
@@ -207,8 +214,10 @@ export default function AddNewHotel() {
             onChange={change}
             className="input w-full"
           />
+          </div>
 
-          <input
+          <div className="mt-4">
+            <input
             name="bed"
             type="number"
             min="1"
@@ -217,6 +226,7 @@ export default function AddNewHotel() {
             onChange={change}
             className="input w-full"
           />
+          </div>
 
           <div className="mt-4">
             <DatePicker placeholder="From date" onChange={(date, dateString) => setValues({...values, from:dateString })} 
