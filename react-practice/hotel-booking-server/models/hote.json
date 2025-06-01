@@ -1,50 +1,52 @@
 [
   {
     "title": "Grand Palace Hotel",
-    "description": "A luxurious hotel with stunning views and top-notch amenities.",
-    "location": "Dhaka, Bangladesh",
-    "price": 120,
-    "postedBy": "664f1d2bc8a5de0021f8a9b0",
-    "image": {
-      "data": "base64_encoded_image_string",
-      "contentType": "image/jpeg"
-    },
-    "bed": 2,
-    "from": "2025-06-01T12:00:00Z",
-    "to": "2025-06-07T12:00:00Z",
-    "createdAt": "2025-05-30T09:00:00Z",
-    "updatedAt": "2025-05-30T09:30:00Z"
+    "content": "Experience unparalleled luxury at Grand Palace Hotel, where sophistication meets comfort. Nestled in the heart of the city, this five-star retreat offers stunning views, world-class dining, and impeccable service. Whether you're here for business or leisure, every detail is crafted to perfection. Spacious rooms, a tranquil spa, and a rooftop lounge make your stay unforgettable. Enjoy personalized concierge service and exclusive amenities. Step into a world of elegance, where excellence is the standard.",
+    "location": "Dhaka, Bangladesh"
   },
   {
     "title": "Sunset Resort",
-    "description": "A peaceful retreat with a private beach and amazing sunset views.",
-    "location": "Cox's Bazar, Bangladesh",
-    "price": 85,
-    "postedBy": "664f1d2bc8a5de0021f8a9b1",
-    "image": {
-      "data": "base64_encoded_image_string",
-      "contentType": "image/png"
-    },
-    "bed": 1,
-    "from": "2025-06-05T14:00:00Z",
-    "to": "2025-06-10T11:00:00Z",
-    "createdAt": "2025-05-29T08:45:00Z",
-    "updatedAt": "2025-05-30T07:50:00Z"
+    "content": "Escape to Sunset Resort, a tropical paradise where serenity meets sophistication. Located on the pristine shores of Cox’s Bazar, this resort offers breathtaking ocean views, private beach access, and luxurious accommodations. Indulge in fine dining, rejuvenate at the spa, or explore nearby attractions. Each suite is designed for ultimate comfort, with modern amenities and elegant decor. Whether you're seeking a romantic getaway or a family vacation, Sunset Resort promises an experience like no other.",
+    "location": "Cox’s Bazar, Bangladesh"
   },
   {
     "title": "Mountain View Lodge",
-    "description": "A cozy hotel nestled in the hills, perfect for nature lovers.",
-    "location": "Sylhet, Bangladesh",
-    "price": 95,
-    "postedBy": "664f1d2bc8a5de0021f8a9b2",
-    "image": {
-      "data": "base64_encoded_image_string",
-      "contentType": "image/webp"
-    },
-    "bed": 3,
-    "from": "2025-06-12T10:00:00Z",
-    "to": "2025-06-20T10:00:00Z",
-    "createdAt": "2025-05-28T07:30:00Z",
-    "updatedAt": "2025-05-30T06:20:00Z"
+    "content": "Nestled in the picturesque hills, Mountain View Lodge offers a perfect blend of nature and comfort. Wake up to breathtaking views and enjoy a peaceful retreat away from the city's hustle. Our cozy wooden cabins feature modern amenities, ensuring a relaxing stay. Explore hiking trails, savor local delicacies, or unwind in our serene garden. Ideal for adventurers and nature lovers, this lodge invites you to reconnect with the beauty of the outdoors while enjoying warm hospitality.",
+    "location": "Sylhet, Bangladesh"
+  },
+  {
+    "title": "Urban Elegance Hotel",
+    "content": "Discover refined city living at Urban Elegance Hotel, where contemporary design meets exceptional service. Situated in the heart of Dhaka, this sleek boutique hotel offers stylish rooms, gourmet dining, and a vibrant atmosphere. Perfect for business travelers and tourists alike, enjoy convenient access to shopping, entertainment, and cultural landmarks. Relax in our rooftop lounge or recharge at the fitness center. Every stay at Urban Elegance Hotel is designed to be effortless, enjoyable, and uniquely memorable.",
+    "location": "Dhaka, Bangladesh"
+  },
+  {
+    "title": "Royal Heritage Inn",
+    "content": "Step into timeless elegance at Royal Heritage Inn, where tradition meets modern luxury. Located in Chittagong, this historic property offers opulent rooms, exquisite decor, and personalized service. Indulge in fine cuisine, explore nearby historical sites, or unwind in our tranquil courtyard. Each room is a masterpiece, blending rich heritage with contemporary comfort. Whether you're here for leisure or business, Royal Heritage Inn ensures an experience filled with charm, sophistication, and warm hospitality.",
+    "location": "Chittagong, Bangladesh"
+  },
+  {
+    "title": "Ocean Breeze Hotel",
+    "content": "Immerse yourself in coastal bliss at Ocean Breeze Hotel, a premier beachfront destination. With direct access to golden sands and crystal-clear waters, enjoy the perfect seaside escape. Our rooms offer stunning ocean views, modern comforts, and an inviting ambiance. Delight in fresh seafood, lounge by the infinity pool, or take part in exciting water activities. Whether you seek adventure or tranquility, Ocean Breeze Hotel is your gateway to an unforgettable beachside retreat.",
+    "location": "Kuakata, Bangladesh"
+  },
+  {
+    "title": "Lakeside Serenity Resort",
+    "content": "Find peace and tranquility at Lakeside Serenity Resort, a hidden gem surrounded by nature. Overlooking a breathtaking lake, our resort offers cozy cottages, delicious cuisine, and an array of outdoor activities. Kayak through serene waters, enjoy a bonfire under the stars, or simply relax amidst lush greenery. Every detail is designed to enhance your experience of relaxation and rejuvenation. Ideal for couples, families, and solo travelers, Lakeside Serenity is where moments become memories.",
+    "location": "Rangamati, Bangladesh"
+  },
+  {
+    "title": "Skyline Tower Hotel",
+    "content": "Reach new heights of comfort and convenience at Skyline Tower Hotel. Dominating the city skyline, this modern high-rise offers sleek accommodations, impeccable service, and breathtaking panoramic views. Indulge in world-class dining, host events in our elegant banquet halls, or unwind in the rooftop lounge. Situated in a prime location, Skyline Tower Hotel provides seamless access to business hubs and tourist attractions. Experience luxury with a contemporary flair, tailored to elevate your stay.",
+    "location": "Dhaka, Bangladesh"
+  },
+  {
+    "title": "Evergreen Eco Retreat",
+    "content": "Escape to nature’s embrace at Evergreen Eco Retreat, a haven designed for sustainable luxury. Surrounded by lush forests, this eco-friendly resort combines modern comforts with environmental consciousness. Enjoy organic cuisine, nature walks, and wellness programs. Our rustic yet elegant accommodations provide an immersive experience in tranquility. Disconnect from the world and reconnect with nature in a place where every moment fosters well-being. Evergreen Eco Retreat is where relaxation meets sustainability.",
+    "location": "Sreemangal, Bangladesh"
+  },
+  {
+    "title": "Majestic Riverside Hotel",
+    "content": "Discover serenity at Majestic Riverside Hotel, a retreat beside a scenic river. With breathtaking views, elegant rooms, and outstanding hospitality, enjoy an escape filled with beauty and comfort. Take a boat ride, savor local delicacies, or simply relax by the water's edge. Every detail is crafted for relaxation, making it an ideal getaway for travelers seeking both luxury and tranquility. Whether you're on a romantic vacation or family trip, Majestic Riverside Hotel offers an unforgettable experience.",
+    "location": "Barisal, Bangladesh"
   }
 ]

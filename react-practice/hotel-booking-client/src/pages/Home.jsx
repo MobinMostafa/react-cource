@@ -5,6 +5,8 @@ import HotelCard from '../components/hotel/HotelCard';
 
 const Home = () => {
 const [hotels, setHotels] = useState([]);
+const showButton = true;
+const onwner = false;
 
 useEffect(() => {
    const allHotels = async () => {
@@ -30,7 +32,7 @@ useEffect(() => {
          <h2 className='text-2xl lg:text-4xl font-bold my-3 lg:my-5 lg:mb-10  text-center'>All Hotels</h2>
         <div className="grid grid-cols-1 gap-4 lg:gap-8">
           {hotels.map((hotel) => (
-            <HotelCard key={hotel._id} hotel={hotel} />
+            <HotelCard key={hotel._id} hotel={hotel} onwner={onwner} showButton={showButton} />
           ))}
         </div>
       </div>

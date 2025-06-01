@@ -1,14 +1,19 @@
 import { useState, useMemo, useEffect } from "react";
 import { TbBuildingBurjAlArab } from "react-icons/tb";
 import YourHotel from "../../components/hotel/YourHotel";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { GrStripe } from "react-icons/gr";
 import { createConnectAccount, getAccountBalance,currencyFormatter, payoutSetting } from "../../actions/stripe.js";
 import { toast } from "react-toastify";
 import { IoSettingsOutline } from "react-icons/io5";
+import { sellerHotels } from "../../actions/hotel.js";
+import HotelCard from "../../components/hotel/HotelCard.jsx";
+import { fetchUser } from "../../actions/auth.js";
+import { updateUser } from "../../features/users/usersSlice.js";
 
 const Dashboard = () => {
   const auth = useSelector((state) => state.users.user);
+  const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
   const user = useMemo(() => auth?.user, [auth]);
@@ -24,29 +29,27 @@ const Dashboard = () => {
       });
   }, [])
 
-  const handleClick = async () => {
-    if (!auth?.token) {
-      toast.error("Authentication token is missing. Please log in again.");
-      return;
+const handleClick = async () => {
+  setLoading(true);
+  try {
+    const res = await createConnectAccount(auth.token);
+
+    if (res.data && res.data.startsWith("http")) {
+      window.location.href = res.data;
     }
 
-    setLoading(true);
-    try {
-      let res = await createConnectAccount(auth.token);
-      // console.log(res);
-
-      if (res.data && typeof res.data === "string" && res.data.startsWith("http")) {
-        window.location.href = res.data;
-      } else {
-        toast.error("Invalid Stripe redirect URL.");
-      }
-    } catch (error) {
-      console.error("Stripe connect error:", error);
-      toast.error("Stripe connect failed. Please try again.");
-    } finally {
-      setLoading(false);
+    // Fetch updated user and update Redux state
+    const updatedUser = await fetchUser(auth.token);
+    if (updatedUser) {
+      dispatch(updateUser(updatedUser));
     }
-  };
+  } catch (error) {
+    toast.error("Stripe setup failed. Try again.",error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const handlePayout = async () => {
      setLoading(true);
@@ -62,6 +65,23 @@ const Dashboard = () => {
      }
   };
 
+  // seller hotels
+const [sellerHotel, setSellerHotel] = useState([]);
+
+useEffect(() => {
+  const getSellerHotels = async () => {
+    try {
+      const { data } = await sellerHotels(auth.token);
+      setSellerHotel(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  getSellerHotels();
+}, [auth.token]);
+
+const showButton = false;
+const owner = true;
   return (
     <div className="container mx-auto p-6">
       {/* Navbar */}
@@ -101,7 +121,21 @@ const Dashboard = () => {
             <input type="radio" name="my_tabs_2" className="tab" aria-label="Your Hotel" defaultChecked />
             <div className="tab-content border-base-300 bg-base-100 p-10">
               {isStripeSetupComplete ? (
+              <> 
                 <YourHotel />
+              {/* my hotel booking start  */ }
+                  <div className="container mx-auto p-6">
+                      <h2 className='text-2xl lg:text-4xl font-bold my-3 lg:my-5 lg:mb-10  text-center'>My Hotels</h2>
+                      <div className="grid grid-cols-1 gap-4 lg:gap-8">
+                      {sellerHotel.length === 0 && <h2 className='text-xl lg:text-2xl font-bold my-3 lg:my-5 lg:mb-10  text-center text-red-500'>No Hotels Found. You don't have any hotel</h2>}
+                        {sellerHotel.map((hotel) => (
+                          <HotelCard key={hotel._id} hotel={hotel} showButton={showButton} owner={owner} />
+                        ))}
+                      </div>
+                    </div>
+                  
+                {/* my hotel booking end  */}
+                </>
               ) : (
                 <div>
                   <h2 className="text-2xl font-bold mb-4">Setup payment method with Stripe</h2>

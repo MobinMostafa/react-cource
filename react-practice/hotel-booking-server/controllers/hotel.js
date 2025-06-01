@@ -7,6 +7,7 @@ export const createHotel = async (req, res) => {
         const fields = req.fields;
         const files = req.files;
         const hotel = new Hotel(fields);
+        hotel.postedBy = req.user._id
         // handle images
         if(files.image){
             hotel.image.data = fs.readFileSync(files.image.path);
@@ -15,7 +16,7 @@ export const createHotel = async (req, res) => {
 
         const savedHotel = await hotel.save();
         res.status(200).json(savedHotel);
-        console.log(savedHotel, 'Hotel created successfully');
+        // console.log(savedHotel, 'Hotel created successfully');
         
     } catch (err) {
         console.log(err, 'Error creating hotel');
@@ -47,4 +48,16 @@ export const getHotelImage = async (req, res) => {
     res.set('Content-Type', hotel.image.contentType);
     return res.send(hotel.image.data);
    }
+}
+
+export const sellerHotels = async (req, res) => {
+    try {
+        const hotels = await Hotel.find({postedBy: req.user._id}).select('-image.data').populate('postedBy', '_id name').exec();
+        res.status(200).json(hotels);
+    } catch (err) {
+        console.log(err, 'Error getting hotels');
+        res.status(400).json({
+            error: err.message
+        });
+    }
 }

@@ -4,7 +4,7 @@ import { TbBuildingBurjAlArab } from 'react-icons/tb'
 
 const Footer = () => {
   return (
-    <footer className="footer sm:footer-horizontal bg-base-100 text-base-content p-10 shadow-lg">
+    <footer className="footer sm:footer-horizontal bg-base-200 text-base-content p-10 shadow-lg">
   <aside>
    <Link to="/" className="text-xl font-bold flex items-center"> <TbBuildingBurjAlArab className="text-3xl text-red-600" />BOOKING</Link>
     <p>

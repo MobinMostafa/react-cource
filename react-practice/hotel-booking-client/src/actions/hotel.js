@@ -20,3 +20,9 @@ export const diffDays = (from, to) => {
 
     return difference
 }
+
+// seller hotel
+
+export const sellerHotels = async (token) => await axios.get(`${import.meta.env.VITE_API_URL}/seller-hotel`, {
+    headers: { Authorization: `Bearer ${token}` },
+});
