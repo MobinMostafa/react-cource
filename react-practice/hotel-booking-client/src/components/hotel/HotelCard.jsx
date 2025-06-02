@@ -1,12 +1,47 @@
 
 import { currencyFormatter } from '../../actions/stripe'
 import { diffDays } from '../../actions/hotel'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
+import { deleteHotel } from '../../actions/hotel'
+import { useSelector } from 'react-redux'
+import Swal from 'sweetalert2'
 
-const HotelCard = ({hotel, showButton, owner}) => {
-    const navigate = useNavigate()
+
+const HotelCard = ({hotel, showButton, owner, setSellerHotel}) => {
+    const navigate = useNavigate();
+    const auth = useSelector((state) => state.users.user);
+    // console.log(auth)
+    const handleEdit = () => {
+        
+    }
+  const handleDelete = async () => {
+  Swal.fire({
+    title: "Are you sure?",
+    text: "This hotel will be permanently deleted!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#d33",
+    cancelButtonColor: "#3085d6",
+    confirmButtonText: "Yes, delete it!"
+  }).then(async (result) => {
+    if (result.isConfirmed) {
+      try {
+        await deleteHotel(auth.token, hotel._id);
+        Swal.fire("Deleted!", "Your hotel has been deleted.", "success");
+
+        //  Update the state to remove deleted hotel
+        setSellerHotel((prevHotels) => prevHotels.filter(h => h._id !== hotel._id));
+        
+      } catch (error) {
+        console.error("Hotel delete error:", error);
+        Swal.fire("Error!", "Failed to delete the hotel. Try again.", "error");
+      }
+    }
+  });
+};
+
   return (
     <div className="card md:card-side bg-base-300 shadow-sm">
   <figure className='lg:w-[40%]'>
@@ -37,8 +72,8 @@ const HotelCard = ({hotel, showButton, owner}) => {
       </p>
      {showButton &&  <button onClick={() => navigate(`/hotels/hotel-details/${hotel._id}`) } className='btn bg-red-500 hover:bg-red-600 text-white'>Show more</button>}
      {owner && <div className='flex gap-2'>
-        <button onClick={() => navigate(`/hotels/edit-hotel/${hotel._id}`) } className='btn bg-red-500 hover:bg-red-600 text-white'><FaEdit className='text-lg lg:text-2xl' /></button>
-        <button onClick={() => navigate(`/hotels/delete-hotel/${hotel._id}`) } className='btn bg-red-500 hover:bg-red-600 text-white'><MdDelete className='text-lg lg:text-2xl' /></button>
+        <button onClick={() => handleEdit() } className='btn bg-red-500 hover:bg-red-600 text-white'><Link to={`/hotels/edit-hotel/${hotel._id}`}><FaEdit className='text-lg lg:text-2xl' /></Link>  </button>
+        <button onClick={() => handleDelete() } className='btn bg-red-500 hover:bg-red-600 text-white'> <MdDelete className='text-lg lg:text-2xl' /></button>
      </div> }
     </div>
   </div>

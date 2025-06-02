@@ -26,3 +26,21 @@ export const diffDays = (from, to) => {
 export const sellerHotels = async (token) => await axios.get(`${import.meta.env.VITE_API_URL}/seller-hotel`, {
     headers: { Authorization: `Bearer ${token}` },
 });
+
+
+// delete hotel 
+
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Deletes a hotel by its ID.
+ * 
+ * @param {string} token - The authorization token for the request.
+ * @param {string} id - The ID of the hotel to be deleted.
+ * 
+ * @returns {Promise} - A promise that resolves to the response of the delete operation.
+ */
+
+/*******  aae78bd2-8666-4efb-a5f6-066307aceac6  *******/
+export const deleteHotel = async (token,id) => await axios.delete(`${import.meta.env.VITE_API_URL}/delete-hotel/${id}`, {
+    headers: { Authorization: `Bearer ${token}` },
+});

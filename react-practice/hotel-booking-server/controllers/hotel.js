@@ -61,3 +61,15 @@ export const sellerHotels = async (req, res) => {
         });
     }
 }
+
+export const deleteHotel = async (req, res) => {
+    try {
+        const deletedHotel = await Hotel.findByIdAndDelete(req.params.id).exec();
+        res.status(200).json(deletedHotel);
+    } catch (err) {
+        console.log(err, 'Error deleting hotel');
+        res.status(400).json({
+            error: err.message
+        });
+    }
+}

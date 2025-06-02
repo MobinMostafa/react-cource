@@ -93,11 +93,11 @@ const owner = true;
           {isStripeSetupComplete && (
           <> 
            {balance && balance.pending && balance.pending.map((ba) => (
-           <div className="tooltip">
+           <div className="tooltip" key={ba}>
               <div className="tooltip-content">
                 <div className=" text-base-100 text-sm lg:text-md">Pending Balance</div>
               </div>
-              <span className="text-sm text-base-400 lg:py-4 lg:px-4 lg:text-xl font-bold " key={ba}> {currencyFormatter(ba)}</span>
+              <span className="text-sm text-base-400 lg:py-4 lg:px-4 lg:text-xl font-bold " > {currencyFormatter(ba)}</span>
             </div>
            
            ))}
@@ -127,9 +127,9 @@ const owner = true;
                   <div className="container mx-auto p-6">
                       <h2 className='text-2xl lg:text-4xl font-bold my-3 lg:my-5 lg:mb-10  text-center'>My Hotels</h2>
                       <div className="grid grid-cols-1 gap-4 lg:gap-8">
-                      {sellerHotel.length === 0 && <h2 className='text-xl lg:text-2xl font-bold my-3 lg:my-5 lg:mb-10  text-center text-red-500'>No Hotels Found. You don't have any hotel</h2>}
-                        {sellerHotel.map((hotel) => (
-                          <HotelCard key={hotel._id} hotel={hotel} showButton={showButton} owner={owner} />
+                      {sellerHotel.length === 0 && <h2 className='text-xl lg:text-2xl font-bold my-3 lg:my-5 lg:mb-10  text-center text-red-500'>Loading...</h2>}
+                        {sellerHotel.length < 1 ? <h2 className='text-xl lg:text-2xl font-bold my-3 lg:my-5 lg:mb-10  text-center text-red-500'>No Hotels Found. You don't have any hotel</h2> : sellerHotel.map((hotel) => (
+                          <HotelCard key={hotel._id} hotel={hotel} showButton={showButton} owner={owner} setSellerHotel={setSellerHotel} />
                         ))}
                       </div>
                     </div>
