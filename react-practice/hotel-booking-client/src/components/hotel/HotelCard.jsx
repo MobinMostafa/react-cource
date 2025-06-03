@@ -4,43 +4,49 @@ import { diffDays } from '../../actions/hotel'
 import {useNavigate, Link} from 'react-router-dom'
 import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
-import { deleteHotel } from '../../actions/hotel'
-import { useSelector } from 'react-redux'
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
+import { deleteHotel } from '../../actions/hotel';
 
 
-const HotelCard = ({hotel, showButton, owner, setSellerHotel}) => {
+
+
+
+
+const HotelCard = ({hotel, showButton, owner,token,onDeleteSuccess }) => {
     const navigate = useNavigate();
-    const auth = useSelector((state) => state.users.user);
+
     // console.log(auth)
     const handleEdit = () => {
         
     }
-  const handleDelete = async () => {
-  Swal.fire({
-    title: "Are you sure?",
-    text: "This hotel will be permanently deleted!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#d33",
-    cancelButtonColor: "#3085d6",
-    confirmButtonText: "Yes, delete it!"
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      try {
-        await deleteHotel(auth.token, hotel._id);
-        Swal.fire("Deleted!", "Your hotel has been deleted.", "success");
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text:  "This hotel will be permanently deleted!",
+      icon:  "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (!result.isConfirmed) return;
 
-        //  Update the state to remove deleted hotel
-        setSellerHotel((prevHotels) => prevHotels.filter(h => h._id !== hotel._id));
-        
-      } catch (error) {
-        console.error("Hotel delete error:", error);
+      try {
+        /* 1. delete on the server */
+        const res = await deleteHotel(token, hotel._id);
+        if (res.status !== 200) throw new Error("Server did not confirm");
+
+        /* 2. update parent’s state */
+        onDeleteSuccess(hotel._id);
+
+        /* 3. nice UX message */
+        Swal.fire("Deleted!", "Your hotel has been deleted.", "success");
+      } catch (err) {
+        console.error(err);
         Swal.fire("Error!", "Failed to delete the hotel. Try again.", "error");
       }
-    }
-  });
-};
+    });
+  };
 
   return (
     <div className="card md:card-side bg-base-300 shadow-sm">
